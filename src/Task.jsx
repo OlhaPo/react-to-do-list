@@ -1,13 +1,21 @@
 import React from "react";
-import { Box } from "@mui/material";
-import Checkbox from "@mui/material/Checkbox";
-import TextField from "@mui/material/TextField";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import Checkbox from "./Checkbox";
+// import ListSubheader from "@mui/material/ListSubheader";
 
-export default function Task() {
+export default function Task({ name, done }) {
   return (
-    <Box>
-      <Checkbox inputProps={{ "aria-label": "checkbox" }} />
-      <TextField id="standard-basic" variant="standard" value="get up" />
-    </Box>
+    // <List mt={3} subheader={<ListSubheader>Already done</ListSubheader>}>
+    <List>
+      <ListItem>
+        <ListItemIcon>
+          <Checkbox defaultChecked={done} />
+        </ListItemIcon>
+        <ListItemText primary={name} />
+      </ListItem>
+    </List>
   );
 }

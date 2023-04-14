@@ -1,16 +1,24 @@
 import React, { useState } from "react";
 import { Box } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import ToggleButton from "@mui/material/ToggleButton";
+import AddBoxIcon from "@mui/icons-material/AddBox";
 import TextField from "@mui/material/TextField";
 
-export default function TaskForm() {
+export default function TaskForm({ onAdd }) {
   const [taskValue, setTaskValue] = useState("");
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    onAdd(taskValue);
+    setTaskValue("");
+  }
+
+  const boxStyle = {
+    display: "flex",
+  };
+
   return (
-    <Box>
-      <ToggleButton value="add">
-        <AddIcon />
-      </ToggleButton>
+    <Box component="form" sx={boxStyle} onSubmit={handleSubmit}>
+      <AddBoxIcon sx={{ fontSize: "35px" }} />
       <TextField
         type="text"
         value={taskValue}
