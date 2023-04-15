@@ -6,13 +6,13 @@ import ListItemText from "@mui/material/ListItemText";
 import Checkbox from "./Checkbox";
 // import ListSubheader from "@mui/material/ListSubheader";
 
-export default function Task({ name, done }) {
+export default function Task({ name, done, onToggle }) {
   return (
     // <List mt={3} subheader={<ListSubheader>Already done</ListSubheader>}>
     <List>
       <ListItem>
         <ListItemIcon>
-          <Checkbox defaultChecked={done} />
+          <Checkbox checked={done} onClick={() => onToggle(!done)} />
         </ListItemIcon>
         <ListItemText primary={name} />
       </ListItem>

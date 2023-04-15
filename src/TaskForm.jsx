@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import TextField from "@mui/material/TextField";
 
@@ -18,7 +18,9 @@ export default function TaskForm({ onAdd }) {
 
   return (
     <Box component="form" sx={boxStyle} onSubmit={handleSubmit}>
-      <AddBoxIcon sx={{ fontSize: "35px" }} />
+      <Button type="submit">
+        <AddBoxIcon sx={{ fontSize: "35px" }} />
+      </Button>
       <TextField
         type="text"
         value={taskValue}

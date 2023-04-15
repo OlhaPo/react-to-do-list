@@ -23,11 +23,32 @@ function App() {
     });
   }
 
+  // Alternative solution
+  // function updateTaskDone(taskIndex, newDone) {
+  //   setTasks((prev) => {
+  //     const newTasks = [...prev];
+  //     newTasks[taskIndex].done = newDone;
+  //     return newTasks;
+  //   });
+  // }
+
+  function updateTaskDone(taskIndex, newValue) {
+    const newTasks = [...tasks]; // clone the `tasks` var
+    newTasks[taskIndex].done = newValue;
+    setTasks(newTasks);
+  }
+
   return (
     <div className="App">
       <TaskForm onAdd={addTask} />
       {tasks.map((task, i) => (
-        <Task {...task} key={`${task.name}-${i}`} />
+        <Task
+          // {...task}
+          name={task.name}
+          done={task.done}
+          key={`${task.name}-${i}`}
+          onToggle={(done) => updateTaskDone(i, done)}
+        />
       ))}
     </div>
   );
