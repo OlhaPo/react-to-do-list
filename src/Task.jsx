@@ -9,7 +9,12 @@ import Checkbox from "./Checkbox";
 export default function Task({ name, done, onToggle }) {
   return (
     // <List mt={3} subheader={<ListSubheader>Already done</ListSubheader>}>
-    <List>
+    <List
+      sx={{
+        textDecorationLine: done ? "line-through" : "none",
+        opacity: done ? "0.5" : "1",
+      }}
+    >
       <ListItem>
         <ListItemIcon>
           <Checkbox checked={done} onClick={() => onToggle(!done)} />
