@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import TaskForm from "./TaskForm";
 import Task from "./Task";
+import Typography from "@mui/material/Typography";
 
 function App() {
   const [tasks, setTasks] = useState([]);
@@ -38,8 +39,14 @@ function App() {
     setTasks(newTasks);
   }
 
+  const numberDone = tasks.filter((t) => t.done).length;
+  const numberTotal = tasks.length;
+
   return (
     <div className="App">
+      <Typography variant="h4" gutterBottom>
+        {numberDone} out of {numberTotal} done
+      </Typography>
       <TaskForm onAdd={addTask} />
       {tasks.map((task, i) => (
         <Task
