@@ -45,6 +45,12 @@ function App() {
     setTasks(newTasks);
   }
 
+  function editTask(index, newName) {
+    const newTasks = [...tasks];
+    newTasks[index].name = newName;
+    setTasks(newTasks);
+  }
+
   const numberDone = tasks?.filter((t) => t.done).length;
   const numberTotal = tasks?.length;
 
@@ -76,6 +82,7 @@ function App() {
             key={`${task.name}-${i}`}
             onToggle={(done) => updateTaskDone(i, done)}
             onDelete={() => removeTask(i)}
+            onEdit={(name) => editTask(i, name)}
           />
         ))}
       </>
