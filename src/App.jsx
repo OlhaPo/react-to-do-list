@@ -42,10 +42,23 @@ function App() {
   const numberDone = tasks.filter((t) => t.done).length;
   const numberTotal = tasks.length;
 
+  let message;
+
+  if (numberDone === 0) {
+    message = "💪 One done is better than zero";
+  } else if (numberDone === numberTotal) {
+    message = "🚀 You are rocking!";
+  } else {
+    message = "👏 Keep going. You are doing great!";
+  }
+
   return (
     <div className="App">
       <Typography variant="h4" gutterBottom>
         {numberDone} out of {numberTotal} done
+      </Typography>
+      <Typography variant="h5" gutterBottom>
+        {message}
       </Typography>
       <TaskForm onAdd={addTask} />
       {tasks.map((task, i) => (
