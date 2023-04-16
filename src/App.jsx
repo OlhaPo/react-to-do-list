@@ -10,7 +10,7 @@ function App() {
 
   useEffect(() => {
     if (tasks.length === 0) return;
-    localStorage.setItem("tasks", JSON.stringify(tasks));
+    saveTasksToLocalStorage(tasks);
   }, [tasks]);
 
   useEffect(() => {
@@ -39,6 +39,13 @@ function App() {
     setTasks(newTasks);
   }
 
+  function removeTask(index) {
+    const newTasks = [...tasks];
+    newTasks.splice(index, 1);
+    saveTasksToLocalStorage(newTasks);
+    setTasks(newTasks);
+  }
+
   const numberDone = tasks.filter((t) => t.done).length;
   const numberTotal = tasks.length;
 
@@ -54,24 +61,31 @@ function App() {
 
   return (
     <div className="App">
-      <Typography variant="h4" gutterBottom>
-        {numberDone} out of {numberTotal} done
-      </Typography>
-      <Typography variant="h5" gutterBottom>
-        {message}
-      </Typography>
-      <TaskForm onAdd={addTask} />
-      {tasks.map((task, i) => (
-        <Task
-          // {...task}
-          name={task.name}
-          done={task.done}
-          key={`${task.name}-${i}`}
-          onToggle={(done) => updateTaskDone(i, done)}
-        />
-      ))}
+      <>
+        <Typography variant="h4" gutterBottom>
+          {numberDone} out of {numberTotal} done
+        </Typography>
+        <Typography variant="h5" gutterBottom>
+          {message}
+        </Typography>
+        <TaskForm onAdd={addTask} />
+        {tasks.map((task, i) => (
+          <Task
+            // {...task}
+            name={task.name}
+            done={task.done}
+            key={`${task.name}-${i}`}
+            onToggle={(done) => updateTaskDone(i, done)}
+            onDelete={() => removeTask(i)}
+          />
+        ))}
+      </>
     </div>
   );
 }
 
 export default App;
+
+function saveTasksToLocalStorage(data) {
+  localStorage.setItem("tasks", JSON.stringify(data));
+}
