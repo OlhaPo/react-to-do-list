@@ -6,10 +6,10 @@ import Task from "./Task";
 import Typography from "@mui/material/Typography";
 
 function App() {
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState(null);
 
   useEffect(() => {
-    if (tasks.length === 0) return;
+    if (tasks === null) return;
     saveTasksToLocalStorage(tasks);
   }, [tasks]);
 
@@ -42,12 +42,11 @@ function App() {
   function removeTask(index) {
     const newTasks = [...tasks];
     newTasks.splice(index, 1);
-    saveTasksToLocalStorage(newTasks);
     setTasks(newTasks);
   }
 
-  const numberDone = tasks.filter((t) => t.done).length;
-  const numberTotal = tasks.length;
+  const numberDone = tasks?.filter((t) => t.done).length;
+  const numberTotal = tasks?.length;
 
   let message;
 
@@ -69,7 +68,7 @@ function App() {
           {message}
         </Typography>
         <TaskForm onAdd={addTask} />
-        {tasks.map((task, i) => (
+        {tasks?.map((task, i) => (
           <Task
             // {...task}
             name={task.name}
