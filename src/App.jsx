@@ -3,56 +3,40 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import TaskForm from "./TaskForm";
 import Task from "./Task";
-import Typography from "@mui/material/Typography";
+import { Typography, Button } from "@mui/material";
+
+const LOCALSTORAGE_KEY = "todos";
 
 function App() {
-  const [tasks, setTasks] = useState(null);
+  const [uncompletedTasks, setUncompletedTasks] = useState(null);
+  const [completedTasks, setCompletedTasks] = useState(null);
+  const [showCompleted, setShowCompleted] = useState(true);
+
+  function saveToLocalStorage() {
+    localStorage.setItem(
+      LOCALSTORAGE_KEY,
+      JSON.stringify({
+        completed: completedTasks,
+        uncompleted: uncompletedTasks,
+        showCompleted,
+      })
+    );
+  }
 
   useEffect(() => {
-    if (tasks === null) return;
-    saveTasksToLocalStorage(tasks);
-  }, [tasks]);
+    if (uncompletedTasks === null || completedTasks === null) return;
+    saveToLocalStorage();
+  }, [uncompletedTasks, completedTasks, showCompleted]);
 
   useEffect(() => {
-    const tasks = JSON.parse(localStorage.getItem("tasks"));
-    setTasks(tasks || []);
+    const state = JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY));
+    setUncompletedTasks(state?.uncompleted ?? []);
+    setCompletedTasks(state?.completed ?? []);
+    setShowCompleted(!!state?.showCompleted);
   }, []);
 
-  function addTask(name) {
-    setTasks((prev) => {
-      return [...prev, { name: name, done: false }];
-    });
-  }
-
-  // Alternative solution
-  // function updateTaskDone(taskIndex, newDone) {
-  //   setTasks((prev) => {
-  //     const newTasks = [...prev];
-  //     newTasks[taskIndex].done = newDone;
-  //     return newTasks;
-  //   });
-  // }
-
-  function updateTaskDone(taskIndex, newValue) {
-    const newTasks = [...tasks]; // clone the `tasks` var
-    newTasks[taskIndex].done = newValue;
-    setTasks(newTasks);
-  }
-
-  function removeTask(index) {
-    const newTasks = [...tasks];
-    newTasks.splice(index, 1);
-    setTasks(newTasks);
-  }
-
-  function editTask(index, newName) {
-    const newTasks = [...tasks];
-    newTasks[index].name = newName;
-    setTasks(newTasks);
-  }
-
-  const numberDone = tasks?.filter((t) => t.done).length;
-  const numberTotal = tasks?.length;
+  const numberDone = completedTasks?.length;
+  const numberTotal = completedTasks?.length + uncompletedTasks?.length;
 
   let message;
 
@@ -70,21 +54,73 @@ function App() {
         <Typography variant="h4" gutterBottom>
           {numberDone} out of {numberTotal} done
         </Typography>
+        {/* <MotivationalMessage
+          numberDone={completedTasks.length}
+          numberTotal={completedTasks.length + uncompletedTasks.length}
+        /> */}
         <Typography variant="h5" gutterBottom>
           {message}
         </Typography>
-        <TaskForm onAdd={addTask} />
-        {tasks?.map((task, i) => (
+
+        <TaskForm
+          onAdd={(newTaskName) =>
+            setUncompletedTasks(
+              insertTaskIntoList(uncompletedTasks, {
+                name: newTaskName,
+                done: false,
+              })
+            )
+          }
+        />
+
+        {uncompletedTasks?.map((task, i) => (
           <Task
-            // {...task}
             name={task.name}
             done={task.done}
             key={`${task.name}-${i}`}
-            onToggle={(done) => updateTaskDone(i, done)}
-            onDelete={() => removeTask(i)}
-            onEdit={(name) => editTask(i, name)}
+            onToggle={(newValue) => {
+              task.done = newValue;
+              setUncompletedTasks(removeTaskFromList(uncompletedTasks, i));
+              setCompletedTasks(insertTaskIntoList(completedTasks, task));
+            }}
+            onDelete={() =>
+              setUncompletedTasks(removeTaskFromList(uncompletedTasks, i))
+            }
+            onEdit={(newName) =>
+              setUncompletedTasks(
+                updateTaskInList(uncompletedTasks, i, {
+                  ...task,
+                  name: newName,
+                })
+              )
+            }
           />
         ))}
+
+        <Button variant="text" onClick={() => setShowCompleted(!showCompleted)}>
+          {showCompleted ? "Hide completed" : "Show completed"}
+        </Button>
+
+        {showCompleted &&
+          completedTasks?.map((task, i) => (
+            <Task
+              name={task.name}
+              done={task.done}
+              key={`${task.name}-${i}`}
+              onToggle={(newValue) => {
+                task.done = newValue;
+                setCompletedTasks(removeTaskFromList(completedTasks, i));
+                setUncompletedTasks(insertTaskIntoList(uncompletedTasks, task));
+              }}
+              onDelete={() =>
+                setCompletedTasks(removeTaskFromList(completedTasks, i))
+              }
+              onEdit={(newName) => {
+                task.name = newName;
+                setCompletedTasks(updateTaskInList(completedTasks, i, task));
+              }}
+            />
+          ))}
       </>
     </div>
   );
@@ -92,6 +128,20 @@ function App() {
 
 export default App;
 
-function saveTasksToLocalStorage(data) {
-  localStorage.setItem("tasks", JSON.stringify(data));
+function insertTaskIntoList(list, task) {
+  const newList = [...list];
+  newList.unshift(task);
+  return newList;
+}
+
+function updateTaskInList(list, i, task) {
+  const newList = [...list];
+  newList[i] = task;
+  return newList;
+}
+
+function removeTaskFromList(list, i) {
+  const newList = [...list];
+  newList.splice(i, 1);
+  return newList;
 }
