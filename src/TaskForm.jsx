@@ -5,11 +5,17 @@ import TextField from "@mui/material/TextField";
 
 export default function TaskForm({ onAdd }) {
   const [taskValue, setTaskValue] = useState("");
+  const [hasError, setHasError] = useState(false);
 
   function handleSubmit(event) {
     event.preventDefault();
+    if (taskValue.length === 0) {
+      setHasError(true);
+      return;
+    }
     onAdd(taskValue);
     setTaskValue("");
+    setHasError(false);
   }
 
   const boxStyle = {
@@ -26,7 +32,9 @@ export default function TaskForm({ onAdd }) {
         value={taskValue}
         onChange={(event) => setTaskValue(event.target.value)}
         color="success"
-        placeholder="Type your next task..."
+        placeholder={
+          hasError ? "The field can't be empty" : "Type your next task..."
+        }
       />
     </Box>
   );
