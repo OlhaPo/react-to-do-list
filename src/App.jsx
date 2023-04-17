@@ -1,9 +1,10 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import "./App.css";
+import MotivationalMessage from "./MotivationalMessage";
 import TaskForm from "./TaskForm";
 import Task from "./Task";
-import { Typography, Button } from "@mui/material";
+import Button from "@mui/material/Button";
 
 const LOCALSTORAGE_KEY = "todos";
 
@@ -35,93 +36,72 @@ function App() {
     setShowCompleted(!!state?.showCompleted);
   }, []);
 
-  const numberDone = completedTasks?.length;
-  const numberTotal = completedTasks?.length + uncompletedTasks?.length;
-
-  let message;
-
-  if (numberDone === 0) {
-    message = "💪 One done is better than zero";
-  } else if (numberDone === numberTotal) {
-    message = "🚀 You are rocking!";
-  } else {
-    message = "👏 Keep going. You are doing great!";
-  }
-
   return (
     <div className="App">
-      <>
-        <Typography variant="h4" gutterBottom>
-          {numberDone} out of {numberTotal} done
-        </Typography>
-        {/* <MotivationalMessage
-          numberDone={completedTasks.length}
-          numberTotal={completedTasks.length + uncompletedTasks.length}
-        /> */}
-        <Typography variant="h5" gutterBottom>
-          {message}
-        </Typography>
+      <MotivationalMessage
+        numberDone={completedTasks?.length}
+        numberTotal={completedTasks?.length + uncompletedTasks?.length}
+      />
 
-        <TaskForm
-          onAdd={(newTaskName) =>
+      <TaskForm
+        onAdd={(newTaskName) =>
+          setUncompletedTasks(
+            insertTaskIntoList(uncompletedTasks, {
+              name: newTaskName,
+              done: false,
+            })
+          )
+        }
+      />
+
+      {uncompletedTasks?.map((task, i) => (
+        <Task
+          name={task.name}
+          done={task.done}
+          key={`${task.name}-${i}`}
+          onToggle={(newValue) => {
+            task.done = newValue;
+            setUncompletedTasks(removeTaskFromList(uncompletedTasks, i));
+            setCompletedTasks(insertTaskIntoList(completedTasks, task));
+          }}
+          onDelete={() =>
+            setUncompletedTasks(removeTaskFromList(uncompletedTasks, i))
+          }
+          onEdit={(newName) =>
             setUncompletedTasks(
-              insertTaskIntoList(uncompletedTasks, {
-                name: newTaskName,
-                done: false,
+              updateTaskInList(uncompletedTasks, i, {
+                ...task,
+                name: newName,
               })
             )
           }
         />
+      ))}
 
-        {uncompletedTasks?.map((task, i) => (
+      <Button variant="text" onClick={() => setShowCompleted(!showCompleted)}>
+        {showCompleted ? "Hide completed" : "Show completed"}
+      </Button>
+
+      {showCompleted &&
+        completedTasks?.map((task, i) => (
           <Task
             name={task.name}
             done={task.done}
             key={`${task.name}-${i}`}
             onToggle={(newValue) => {
               task.done = newValue;
-              setUncompletedTasks(removeTaskFromList(uncompletedTasks, i));
-              setCompletedTasks(insertTaskIntoList(completedTasks, task));
+              setCompletedTasks(removeTaskFromList(completedTasks, i));
+              setUncompletedTasks(insertTaskIntoList(uncompletedTasks, task));
             }}
             onDelete={() =>
-              setUncompletedTasks(removeTaskFromList(uncompletedTasks, i))
+              setCompletedTasks(removeTaskFromList(completedTasks, i))
             }
-            onEdit={(newName) =>
-              setUncompletedTasks(
-                updateTaskInList(uncompletedTasks, i, {
-                  ...task,
-                  name: newName,
-                })
-              )
-            }
+            onEdit={(newName) => {
+              task.name = newName;
+              setCompletedTasks(updateTaskInList(completedTasks, i, task));
+            }}
           />
         ))}
-
-        <Button variant="text" onClick={() => setShowCompleted(!showCompleted)}>
-          {showCompleted ? "Hide completed" : "Show completed"}
-        </Button>
-
-        {showCompleted &&
-          completedTasks?.map((task, i) => (
-            <Task
-              name={task.name}
-              done={task.done}
-              key={`${task.name}-${i}`}
-              onToggle={(newValue) => {
-                task.done = newValue;
-                setCompletedTasks(removeTaskFromList(completedTasks, i));
-                setUncompletedTasks(insertTaskIntoList(uncompletedTasks, task));
-              }}
-              onDelete={() =>
-                setCompletedTasks(removeTaskFromList(completedTasks, i))
-              }
-              onEdit={(newName) => {
-                task.name = newName;
-                setCompletedTasks(updateTaskInList(completedTasks, i, task));
-              }}
-            />
-          ))}
-      </>
     </div>
   );
 }
