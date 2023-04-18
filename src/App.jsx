@@ -1,10 +1,11 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import "./App.css";
+import Header from "./Header";
 import MotivationalMessage from "./MotivationalMessage";
 import TaskForm from "./TaskForm";
 import Task from "./Task";
-import Button from "@mui/material/Button";
+import { Button, Box } from "@mui/material/";
 
 const LOCALSTORAGE_KEY = "todos";
 
@@ -38,21 +39,27 @@ function App() {
 
   return (
     <div className="App">
-      <MotivationalMessage
-        numberDone={completedTasks?.length}
-        numberTotal={completedTasks?.length + uncompletedTasks?.length}
-      />
+      <Header />
 
-      <TaskForm
-        onAdd={(newTaskName) =>
-          setUncompletedTasks(
-            insertTaskIntoList(uncompletedTasks, {
-              name: newTaskName,
-              done: false,
-            })
-          )
-        }
-      />
+      <Box
+        sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+      >
+        <TaskForm
+          onAdd={(newTaskName) =>
+            setUncompletedTasks(
+              insertTaskIntoList(uncompletedTasks, {
+                name: newTaskName,
+                done: false,
+              })
+            )
+          }
+        />
+
+        <MotivationalMessage
+          numberDone={completedTasks?.length}
+          numberTotal={completedTasks?.length + uncompletedTasks?.length}
+        />
+      </Box>
 
       {uncompletedTasks?.map((task, i) => (
         <Task

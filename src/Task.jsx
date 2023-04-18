@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 import Checkbox from "./Checkbox";
 import DeleteIcon from "@mui/icons-material/Delete";
-// import ListSubheader from "@mui/material/ListSubheader";
 
 export default function Task({ name, done, onToggle, onDelete, onEdit }) {
   const [isEdit, setIsEdit] = useState(false);
@@ -38,14 +37,15 @@ export default function Task({ name, done, onToggle, onDelete, onEdit }) {
   }
 
   return (
-    // <List mt={3} subheader={<ListSubheader>Already done</ListSubheader>}>
     <List
       sx={{
         textDecorationLine: done ? "line-through" : "none",
         opacity: done ? "0.5" : "1",
+        paddingTop: 0,
+        paddingBottom: "0",
       }}
     >
-      <ListItem sx={{ width: "58%" }}>
+      <ListItem>
         <ListItemIcon>
           <Checkbox checked={done} onClick={() => onToggle(!done)} />
         </ListItemIcon>
@@ -66,7 +66,7 @@ export default function Task({ name, done, onToggle, onDelete, onEdit }) {
         )}
 
         <Button onClick={onDelete}>
-          <DeleteIcon />
+          <DeleteIcon sx={{ fontSize: "25px", color: "#468966" }} />
         </Button>
       </ListItem>
     </List>

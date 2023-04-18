@@ -5,6 +5,7 @@ import CheckBoxIcon from "@mui/icons-material/CheckBox";
 const Checkbox = ({ checked = false, onClick }) => {
   const iconstyle = {
     fontSize: "30px",
+    color: "#468966",
   };
   return (
     <div onClick={onClick}>

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Box, Button } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import AddBoxIcon from "@mui/icons-material/AddBox";
-import TextField from "@mui/material/TextField";
 
 export default function TaskForm({ onAdd }) {
   const [taskValue, setTaskValue] = useState("");
+
   const [hasError, setHasError] = useState(false);
 
   function handleSubmit(event) {
@@ -18,23 +18,23 @@ export default function TaskForm({ onAdd }) {
     setHasError(false);
   }
 
-  const boxStyle = {
-    display: "flex",
-  };
-
   return (
-    <Box component="form" sx={boxStyle} onSubmit={handleSubmit}>
+    <Box
+      component="form"
+      onSubmit={handleSubmit}
+      mb={3}
+      sx={{ display: "flex" }}
+    >
       <Button type="submit">
-        <AddBoxIcon sx={{ fontSize: "35px" }} />
+        <AddBoxIcon sx={{ fontSize: "35px", color: "#468966" }} />
       </Button>
       <TextField
+        sx={{ width: "500px" }}
         type="text"
         value={taskValue}
         onChange={(event) => setTaskValue(event.target.value)}
         color="success"
-        placeholder={
-          hasError ? "The field can't be empty" : "Type your next task..."
-        }
+        placeholder={hasError ? "Type something 😉" : "Type your next task..."}
       />
     </Box>
   );
