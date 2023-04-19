@@ -97,7 +97,7 @@ function App() {
           <Box sx={columnHeaderStyle}>
             <Typography
               variant="subtitle1"
-              sx={{ fontSize: "21px" }}
+              sx={{ fontSize: "21px", color: "#468966", fontWeight: 400 }}
               pb={2}
               pt={2}
             >
