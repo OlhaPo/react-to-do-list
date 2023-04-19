@@ -40,7 +40,7 @@ export default function Task({ name, done, onToggle, onDelete, onEdit }) {
         borderBottom: "1px solid #D9D8DC",
       }}
     >
-      <Button sx={{ minWidth: "initial", pl: 0 }}>
+      <Button sx={{ minWidth: "initial", pl: 0, ml: 0, pr: "16px" }}>
         <Checkbox checked={done} onClick={() => onToggle(!done)} />
       </Button>
       {isEdit ? (

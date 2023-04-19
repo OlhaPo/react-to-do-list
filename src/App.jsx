@@ -2,16 +2,14 @@ import React from "react";
 import { useState, useEffect } from "react";
 import "./App.css";
 import Header from "./Header";
-import MotivationalMessage from "./MotivationalMessage";
 import TaskForm from "./TaskForm";
 import Task from "./Task";
-import { Button, Box, Container } from "@mui/material/";
+import { Box, Container, Typography } from "@mui/material/";
 
 const LOCALSTORAGE_KEY = "todos";
 
 const columnHeaderStyle = {
   height: "80px",
-  // mb: 3,
 };
 
 function App() {
@@ -48,7 +46,10 @@ function App() {
 
   return (
     <div className="App">
-      <Header />
+      <Header
+        uncompletedTasks={uncompletedTasks}
+        completedTasks={completedTasks}
+      />
       <Container sx={containerStyle}>
         {/* Left column */}
         <Box sx={{ pr: 3, width: "50%", borderRight: "1px solid grey" }}>
@@ -65,10 +66,6 @@ function App() {
             />
           </Box>
 
-          {/* <MotivationalMessage
-            numberDone={completedTasks?.length}
-            numberTotal={completedTasks?.length + uncompletedTasks?.length}
-          /> */}
           {uncompletedTasks?.map((task, i) => (
             <Task
               name={task.name}
@@ -97,7 +94,17 @@ function App() {
 
         {/* Right column */}
         <Box sx={{ pl: 3, width: "50%" }}>
-          <Box sx={columnHeaderStyle}>Completed</Box>
+          <Box sx={columnHeaderStyle}>
+            <Typography
+              variant="subtitle1"
+              sx={{ fontSize: "21px" }}
+              pb={2}
+              pt={2}
+            >
+              {" "}
+              Completed
+            </Typography>
+          </Box>
 
           {showCompleted &&
             completedTasks?.map((task, i) => (

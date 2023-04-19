@@ -15,6 +15,7 @@ export default function MotivationalMessage({ numberDone, numberTotal }) {
   const typographyStyle = {
     fontSize: "21px",
     textAlign: "center",
+    color: "#000000",
   };
   return (
     <div className="MotivationalMessage">
