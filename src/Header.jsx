@@ -4,12 +4,12 @@ import ChecklistIcon from "@mui/icons-material/Checklist";
 
 export default function Header() {
   const headerStyle = {
-    padding: "30px 10px",
+    padding: "30px 30px",
     background: "#d2ebcd",
     borderBottom: "3px solid #468966",
     color: "#468966",
     display: "flex",
-    justifyContent: "center",
+    justifyContent: "start",
     alignItems: "stretch",
     columnGap: "15px",
     marginBottom: "60px",

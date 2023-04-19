@@ -22,14 +22,13 @@ export default function TaskForm({ onAdd }) {
     <Box
       component="form"
       onSubmit={handleSubmit}
-      mb={3}
-      sx={{ display: "flex" }}
+      sx={{ display: "flex", justifyContent: "flex-start" }}
     >
-      <Button type="submit">
+      <Button type="submit" sx={{ pl: 0, ml: 0, minWidth: "initial" }}>
         <AddBoxIcon sx={{ fontSize: "35px", color: "#468966" }} />
       </Button>
       <TextField
-        sx={{ width: "500px" }}
+        sx={{ flexGrow: 1 }}
         type="text"
         value={taskValue}
         onChange={(event) => setTaskValue(event.target.value)}
