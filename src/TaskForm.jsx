@@ -28,6 +28,7 @@ export default function TaskForm({ onAdd }) {
         <AddBoxIcon sx={{ fontSize: "35px", color: "#468966" }} />
       </Button>
       <TextField
+        autoFocus
         sx={{ flexGrow: 1 }}
         type="text"
         value={taskValue}
