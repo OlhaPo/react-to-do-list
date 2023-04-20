@@ -120,7 +120,7 @@ function App() {
             },
           }}
         >
-          <Box sx={columnHeaderStyle}>
+          <Box sx={{ ...columnHeaderStyle, mb: 1 }}>
             <Typography
               variant="subtitle1"
               sx={{
