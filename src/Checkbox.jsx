@@ -1,4 +1,5 @@
 import React from "react";
+import { Box } from "@mui/material";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 
@@ -8,10 +9,10 @@ const Checkbox = ({ checked = false, onClick }) => {
     color: "#468966",
   };
   return (
-    <div onClick={onClick}>
+    <Box onClick={onClick} sx={{ display: "flex" }}>
       {!checked && <CheckBoxOutlineBlankIcon sx={iconstyle} />}
       {checked && <CheckBoxIcon sx={iconstyle} />}
-    </div>
+    </Box>
   );
 };
 

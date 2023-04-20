@@ -16,16 +16,18 @@ export default function MotivationalMessage({ numberDone, numberTotal }) {
     fontSize: "21px",
     textAlign: "center",
     color: "#000000",
+    py: 2,
+    lineHeight: 1.4,
+    textAlign: "right",
   };
   return (
     <div className="MotivationalMessage">
       <Typography variant="subtitle1" sx={typographyStyle}>
-        {numberDone} out of {numberTotal} done
-      </Typography>
-
-      <Typography variant="subtitle1" sx={typographyStyle}>
+        {numberDone} out of {numberTotal} done <br />
         {message}
       </Typography>
+
+      {/* <Typography variant="subtitle1" sx={typographyStyle}></Typography> */}
     </div>
   );
 }

@@ -27,7 +27,9 @@ export default function Header({ completedTasks, uncompletedTasks }) {
       </Box>
       <MotivationalMessage
         numberDone={completedTasks?.length}
-        numberTotal={completedTasks?.length + uncompletedTasks?.length}
+        numberTotal={
+          (completedTasks?.length ?? 0) + (uncompletedTasks?.length ?? 0)
+        }
       />
     </Box>
   );

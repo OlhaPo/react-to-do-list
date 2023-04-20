@@ -31,16 +31,23 @@ export default function Task({ name, done, onToggle, onDelete, onEdit }) {
   return (
     <Box
       sx={{
-        textDecorationLine: done ? "line-through" : "none",
-        opacity: done ? "0.5" : "1",
         paddingTop: 0,
         paddingBottom: "0",
         display: "flex",
         alignItems: "center",
+        textDecorationLine: done ? "line-through" : "none",
         borderBottom: "1px solid #D9D8DC",
       }}
     >
-      <Button sx={{ minWidth: "initial", pl: 0, ml: 0, pr: "16px" }}>
+      <Button
+        sx={{
+          minWidth: "initial",
+          pl: 0,
+          ml: 0,
+          pr: "16px",
+          opacity: done ? "0.5" : "1",
+        }}
+      >
         <Checkbox checked={done} onClick={() => onToggle(!done)} />
       </Button>
       {isEdit ? (
@@ -60,10 +67,19 @@ export default function Task({ name, done, onToggle, onDelete, onEdit }) {
           />
         </Box>
       ) : (
-        <ListItemText primary={name} onClick={startEditing} />
+        <ListItemText
+          primary={name}
+          onClick={startEditing}
+          sx={{
+            opacity: done ? "0.5" : "1",
+          }}
+        />
       )}
 
-      <Button onClick={onDelete} sx={{ minWidth: "initial", px: 0 }}>
+      <Button
+        onClick={onDelete}
+        sx={{ minWidth: "initial", px: 0, opacity: done ? "0.5" : "1" }}
+      >
         <DeleteIcon
           sx={{
             fontSize: "20px",
