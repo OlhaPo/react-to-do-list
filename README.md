@@ -1,2 +1,2 @@
-# react-to-do-list
+To-Do List was created using React and Material UI.
  
