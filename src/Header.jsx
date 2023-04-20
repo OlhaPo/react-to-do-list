@@ -13,17 +13,45 @@ export default function Header({ completedTasks, uncompletedTasks }) {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
+    "@media (max-width:576px)": {
+      marginBottom: "35px",
+      padding: "10px",
+      alignItems: "stretch",
+      display: "flex",
+      justifyContent: "space-between",
+      flexDirection: "column",
+      alignContent: "space-between",
+    },
   };
 
   return (
     <Box className="Header" sx={headerStyle}>
       <Box
-        sx={{ flexDirection: "row", alignItems: "stretch", display: "flex" }}
+        sx={{
+          flexDirection: "row",
+          alignItems: "stretch",
+          display: "flex",
+          "@media (max-width:576px)": {
+            pt: 2,
+          },
+        }}
       >
         <ChecklistIcon
-          style={{ color: "#468966", fontSize: "40px", paddingRight: "10px" }}
+          sx={{
+            color: "#468966",
+            fontSize: "40px",
+            paddingRight: "10px",
+            "@media (max-width:576px)": {
+              fontSize: "30px",
+            },
+          }}
         />
-        <Typography variant="h4">TO-DO List</Typography>
+        <Typography
+          variant="h4"
+          sx={{ "@media (max-width:576px)": { fontSize: "25px" } }}
+        >
+          TO-DO List
+        </Typography>
       </Box>
       <MotivationalMessage
         numberDone={completedTasks?.length}

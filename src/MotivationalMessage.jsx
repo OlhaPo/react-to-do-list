@@ -1,5 +1,5 @@
 import React from "react";
-import Typography from "@mui/material/Typography";
+import { Box, Typography } from "@mui/material";
 
 export default function MotivationalMessage({ numberDone, numberTotal }) {
   let message;
@@ -14,20 +14,44 @@ export default function MotivationalMessage({ numberDone, numberTotal }) {
 
   const typographyStyle = {
     fontSize: "21px",
-    textAlign: "center",
     color: "#000000",
-    py: 2,
-    lineHeight: 1.4,
     textAlign: "right",
+    "@media (max-width:576px)": {
+      fontSize: "15px",
+      lineHeight: 1.75,
+      textAlign: "left",
+    },
   };
+
   return (
-    <div className="MotivationalMessage">
+    <Box
+      className="MotivationalMessage"
+      sx={{
+        "@media (max-width:576px)": {
+          mt: 2,
+        },
+      }}
+    >
+      <Typography
+        variant="subtitle1"
+        sx={{
+          fontSize: "21px",
+          color: "#000000",
+          textAlign: "right",
+          "@media (max-width:576px)": {
+            fontSize: "15px",
+            lineHeight: 1.75,
+            textAlign: "left",
+          },
+        }}
+      >
+        {numberDone} out of {numberTotal} done
+      </Typography>
       <Typography variant="subtitle1" sx={typographyStyle}>
-        {numberDone} out of {numberTotal} done <br />
         {message}
       </Typography>
 
       {/* <Typography variant="subtitle1" sx={typographyStyle}></Typography> */}
-    </div>
+    </Box>
   );
 }

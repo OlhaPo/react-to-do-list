@@ -25,7 +25,7 @@ export default function TaskForm({ onAdd }) {
       sx={{ display: "flex", justifyContent: "flex-start" }}
     >
       <Button type="submit" sx={{ pl: 0, ml: 0, minWidth: "initial" }}>
-        <AddBoxIcon sx={{ fontSize: "35px", color: "#468966" }} />
+        <AddBoxIcon sx={{ fontSize: "33px", color: "#468966" }} />
       </Button>
       <TextField
         autoFocus

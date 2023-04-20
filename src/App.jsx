@@ -10,6 +10,9 @@ const LOCALSTORAGE_KEY = "todos";
 
 const columnHeaderStyle = {
   height: "80px",
+  "@media (max-width:576px)": {
+    height: "initial",
+  },
 };
 
 function App() {
@@ -19,6 +22,9 @@ function App() {
 
   const containerStyle = {
     display: "flex",
+    "@media (max-width:576px)": {
+      flexDirection: "column",
+    },
   };
 
   function saveToLocalStorage() {
@@ -52,8 +58,19 @@ function App() {
       />
       <Container sx={containerStyle}>
         {/* Left column */}
-        <Box sx={{ pr: 3, width: "50%", borderRight: "1px solid grey" }}>
-          <Box sx={columnHeaderStyle}>
+        <Box
+          sx={{
+            pr: 3,
+            width: "50%",
+            borderRight: "1px solid grey",
+            "@media (max-width:576px)": {
+              width: "100%",
+              borderRight: "none",
+              pr: 0,
+            },
+          }}
+        >
+          <Box sx={{ ...columnHeaderStyle, mb: 1 }}>
             <TaskForm
               onAdd={(newTaskName) =>
                 setUncompletedTasks(
@@ -93,15 +110,32 @@ function App() {
         {/* End left column */}
 
         {/* Right column */}
-        <Box sx={{ pl: 3, width: "50%" }}>
-          <Box sx={columnHeaderStyle}>
+        <Box
+          sx={{
+            pl: 3,
+            width: "50%",
+            "@media (max-width:576px)": {
+              width: "100%",
+              pl: 0,
+            },
+          }}
+        >
+          <Box sx={{ ...columnHeaderStyle, mt: 3 }}>
             <Typography
               variant="subtitle1"
-              sx={{ fontSize: "21px", color: "#468966", fontWeight: 400 }}
+              sx={{
+                fontSize: "21px",
+                color: "#468966",
+                fontWeight: 400,
+                "@media (max-width:576px)": {
+                  fontSize: "18px",
+                  pb: 0,
+                  pt: 0,
+                },
+              }}
               pb={2}
               pt={2}
             >
-              {" "}
               Completed
             </Typography>
           </Box>
