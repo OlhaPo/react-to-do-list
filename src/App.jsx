@@ -120,7 +120,7 @@ function App() {
             },
           }}
         >
-          <Box sx={{ ...columnHeaderStyle, mt: 3 }}>
+          <Box sx={columnHeaderStyle}>
             <Typography
               variant="subtitle1"
               sx={{
@@ -131,6 +131,7 @@ function App() {
                   fontSize: "18px",
                   pb: 0,
                   pt: 0,
+                  mt: 3,
                 },
               }}
               pb={2}
@@ -140,28 +141,25 @@ function App() {
             </Typography>
           </Box>
 
-          {showCompleted &&
-            completedTasks?.map((task, i) => (
-              <Task
-                name={task.name}
-                done={task.done}
-                key={`${task.name}-${i}`}
-                onToggle={(newValue) => {
-                  task.done = newValue;
-                  setCompletedTasks(removeTaskFromList(completedTasks, i));
-                  setUncompletedTasks(
-                    insertTaskIntoList(uncompletedTasks, task)
-                  );
-                }}
-                onDelete={() =>
-                  setCompletedTasks(removeTaskFromList(completedTasks, i))
-                }
-                onEdit={(newName) => {
-                  task.name = newName;
-                  setCompletedTasks(updateTaskInList(completedTasks, i, task));
-                }}
-              />
-            ))}
+          {completedTasks?.map((task, i) => (
+            <Task
+              name={task.name}
+              done={task.done}
+              key={`${task.name}-${i}`}
+              onToggle={(newValue) => {
+                task.done = newValue;
+                setCompletedTasks(removeTaskFromList(completedTasks, i));
+                setUncompletedTasks(insertTaskIntoList(uncompletedTasks, task));
+              }}
+              onDelete={() =>
+                setCompletedTasks(removeTaskFromList(completedTasks, i))
+              }
+              onEdit={(newName) => {
+                task.name = newName;
+                setCompletedTasks(updateTaskInList(completedTasks, i, task));
+              }}
+            />
+          ))}
         </Box>
         {/* End right column */}
       </Container>
